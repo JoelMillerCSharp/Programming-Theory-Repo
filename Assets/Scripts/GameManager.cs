@@ -53,6 +53,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public int highScore;
+    public string highScoreName;
+
+
     private void Awake()
     {
         if(Instance != null)
@@ -62,6 +66,7 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void InitializeUI()
@@ -79,8 +84,12 @@ public class GameManager : MonoBehaviour
     }
     public void ResetPlayerData()
     {
-        currentScore = 0;
         currentName = null;
+        ResetPlayerScore();
+    }
+    public void ResetPlayerScore()
+    {
+        currentScore = 0;
     }
     public void AddScore(int score)
     {
@@ -93,7 +102,7 @@ public class GameManager : MonoBehaviour
     public void LoadGameplayScene()
     {
         SceneManager.LoadScene(1);
-        currentScore = 0;
+        ResetPlayerScore();
     }
     public void LoadMainMenu()
     {
@@ -127,7 +136,7 @@ public class GameManager : MonoBehaviour
 
         File.WriteAllText(Application.persistentDataPath + "/saveFile.json", jsonText);
     }
-    public void LoadScore()
+    public bool TryLoadScore()
     {
         string path = Application.persistentDataPath + "/saveFile.json";
         if (File.Exists(path))
@@ -135,8 +144,12 @@ public class GameManager : MonoBehaviour
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
 
-            currentScore = data.highScore;
-            currentName = data.highScoreName;
+            highScore = data.highScore;
+            highScoreName = data.highScoreName;
+
+            return true;
         }
+        else
+            return false;
     }
 }

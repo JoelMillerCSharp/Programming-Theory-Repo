@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This is the base class to set for actors that can shoot (and be shot). Holds basic functionality for shooting objects and taking damage (and dying of course).
+/// </summary>
 public class Shooter : MonoBehaviour
 {
     [SerializeField]
