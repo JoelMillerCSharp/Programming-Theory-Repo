@@ -15,12 +15,10 @@ public class Player : Shooter
     {
         base.Awake();
         rBody = GetComponent<Rigidbody>();
+        isAlive = true;
     }
     private void Update()
     {
-        if (!isAlive)
-            return;
-
         if (Input.GetKeyDown(KeyCode.Space))
             Jump();
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -36,17 +34,26 @@ public class Player : Shooter
     //ABSTRACTION
     private void Jump()
     {
+        if (!isAlive)
+            return;
+
         rBody.AddForce(new Vector3(0, 15, 0), ForceMode.Impulse);
     }
     //ABSTRACTION
     private void Move(float xMovement, float zMovement, float yMouseRotation)
     {
+        if (!isAlive)
+            return;
+
         transform.Translate(new Vector3(xMovement * moveSpeed * Time.deltaTime, 0, zMovement * moveSpeed * Time.deltaTime));
         transform.Rotate(new Vector3(0, yMouseRotation, 0));
     }
     //POLYMORPHISM
     protected override void Shoot()
     {
+        if (!isAlive)
+            return;
+
         GameObject proj = Instantiate(projectile, shootingOffset.transform.position, transform.rotation);
         proj.GetComponent<ProjectileBase>().SetBaseSpeed(50f);
         proj.GetComponent<ProjectileBase>().fromPlayer = true;
@@ -56,5 +63,10 @@ public class Player : Shooter
     {
         base.TakeDamage(damage);
         GameManager.Instance.SetHealthBar();
+    }
+    protected override void Die()
+    {
+        GameManager.Instance.GameOver();
+        isAlive = false;
     }
 }

@@ -28,18 +28,27 @@ public class ProjectileBase : MonoBehaviour
         baseSpeed = speed;
         speedHasBeenSet = true;
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Player" && !fromPlayer)
+        if (other.gameObject.name == "Player")
         {
-            other.gameObject.GetComponent<Player>().TakeDamage(1);
+            if(!fromPlayer)
+            {
+                other.gameObject.GetComponent<Player>().TakeDamage(1);
+                Destroy(gameObject);
+            }
         }
-        else if (other.gameObject.tag == "Enemy" && fromPlayer)
+        else if (other.gameObject.tag == "Enemy")
         {
-            other.gameObject.GetComponent<Turret>().TakeDamage(5);
+            if(fromPlayer)
+            {
+                other.gameObject.GetComponent<Turret>().TakeDamage(5);
+                Destroy(gameObject);
+            }
         }
-        Destroy(gameObject);
     }
+
     //ABSTRACTION
     void CheckBounds()
     {

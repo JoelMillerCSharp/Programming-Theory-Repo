@@ -4,14 +4,22 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
+    //Instance
     public static GameManager Instance { get; private set; }
+
+    //public vars
+    public bool gameOver = false;
+
+    //Private vars
     private UIBarBase healthBar;
     private Player player;
-    private bool gameOver = false;
+    [SerializeField]
+    private GameObject gameOverUI;
 
     //ENCAPSULATION
     public int currentScore;
@@ -56,7 +64,6 @@ public class GameManager : MonoBehaviour
     public int highScore;
     public string highScoreName;
 
-
     private void Awake()
     {
         if(Instance != null)
@@ -71,6 +78,10 @@ public class GameManager : MonoBehaviour
 
     public void InitializeUI()
     {
+        gameOverUI = GameObject.Find("GameOverUI");
+        gameOverUI.SetActive(false);
+
+        player = GameObject.Find("Player").GetComponent<Player>();
         healthBar = GameObject.Find("HealthBar").GetComponent<UIBarBase>();
         healthBar.SetBarToMaxValue(10);
     }
@@ -84,12 +95,12 @@ public class GameManager : MonoBehaviour
     }
     public void ResetPlayerData()
     {
-        currentName = null;
+        currentNameValue = null;
         ResetPlayerScore();
     }
     public void ResetPlayerScore()
     {
-        currentScore = 0;
+        currentScoreValue = 0;
     }
     public void AddScore(int score)
     {
@@ -98,6 +109,19 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameOver = true;
+        gameOverUI.SetActive(true);
+
+        if (currentScore > highScore)
+        {
+            highScore = currentScoreValue;
+            highScoreName = currentNameValue;
+
+            gameOverUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "New High Score! (" + highScoreName + ": " + highScore + ")";
+
+            SaveScore();
+        }
+        else
+            gameOverUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "High Score: " + highScoreName + " (" + highScore + ")";
     }
     public void LoadGameplayScene()
     {

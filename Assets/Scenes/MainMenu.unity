@@ -802,6 +802,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad94851e1113524db38edd2ff3c6181, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOver: 0
+  gameOverUI: {fileID: 0}
   currentScore: 0
   currentName: 
   highScore: 0
@@ -990,6 +992,7 @@ GameObject:
   - component: {fileID: 1121570273}
   - component: {fileID: 1121570272}
   - component: {fileID: 1121570276}
+  - component: {fileID: 1121570277}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1096,6 +1099,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highScoreText: {fileID: 1394799404}
+--- !u!114 &1121570277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121570271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c595b71da3aa4b4183f0daebda9097f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1356079096
 GameObject:
   m_ObjectHideFlags: 0
@@ -1503,9 +1518,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1006238366}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: QuitGame
+      - m_Target: {fileID: 1121570277}
+        m_TargetAssemblyTypeName: MenuOptions, Assembly-CSharp
+        m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1637,9 +1652,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1006238366}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: LoadGameplayScene
+      - m_Target: {fileID: 1121570277}
+        m_TargetAssemblyTypeName: MenuOptions, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

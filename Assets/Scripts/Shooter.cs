@@ -19,6 +19,14 @@ public class Shooter : MonoBehaviour
         shootingOffset = gameObject.transform.GetChild(0).gameObject;
     }
 
+    /*
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Proj")
+            TakeDamage(2);
+    }
+    */
+
     /// <summary>
     /// Creates a projectile that travels in the direction the shooter is facing
     /// </summary>

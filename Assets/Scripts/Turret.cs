@@ -27,11 +27,15 @@ public class Turret : Shooter
     //POLYMORPHISM
     protected override void Shoot()
     {
+        if (GameManager.Instance.gameOver)
+            return;
+
         GameObject proj = Instantiate(projectile, shootingOffset.transform.position, transform.rotation);
         proj.GetComponent<ProjectileBase>().SetBaseSpeed(25f);
     }
     protected override void Die()
     {
         GameManager.Instance.AddScore(1);
+        Destroy(gameObject);
     }
 }
